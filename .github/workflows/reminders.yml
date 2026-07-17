@@ -2,11 +2,9 @@ name: Telegram reminders
 
 on:
   schedule:
-    # Moscow time (UTC+3): 9:00, 12:00, 15:00, 18:00
-    - cron: "0 6 * * *"
-    - cron: "0 9 * * *"
-    - cron: "0 12 * * *"
-    - cron: "0 15 * * *"
+    - cron: "0 6,9,12,15 * * *"
+    - cron: "15 6,9,12,15 * * *"
+    - cron: "30 6,9,12,15 * * *"
   workflow_dispatch:
 
 jobs:
@@ -15,6 +13,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+
+      - name: Restore last-reminder state
+        uses: actions/cache@v4
+        with:
+          path: .last-reminder
+          key: last-reminder-${{ github.run_id }}
+          restore-keys: |
+            last-reminder-
 
       - name: Send Telegram reminder
         env:
