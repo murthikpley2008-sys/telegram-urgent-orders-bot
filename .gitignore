@@ -1,0 +1,9 @@
+.env
+chat_id.json
+config.json
+state.json
+bot-token.txt
+bot.log
+__pycache__/
+.venv/
+*.pyc
